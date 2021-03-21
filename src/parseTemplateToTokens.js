@@ -15,7 +15,27 @@ export default function parseTemplateToTokens(templateStr) {
     // 收集开始标记 {{ 之前的文字
     words = scanner.scanUntil('{{');
     if (words != '') {
-      tokens.push(['text', words])
+      // 判断空格是标签内的还是文字中的
+      let _words = ''
+      let isInTag = false;
+      for (let i = 0; i < words.length; i++) {
+        if(words[i] === '<'){
+          isInTag = true
+        }else if(words[i] === '>'){
+          isInTag = false
+        }
+        if(!/\s/.test(words[i])){
+          // console.log(words[i]);
+          _words += words[i]
+        }else  {
+          if(isInTag){
+            _words += words[i]
+          }
+          
+        }
+        
+      }
+      tokens.push(['text', _words])
     }
 
     // 跳过标记 {{

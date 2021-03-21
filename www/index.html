@@ -8,26 +8,41 @@
 </head>
 <body>
   <h1>haha</h1>
+  <div id="container"></div>
   <script src="/xuni/bundle.js"></script>
   <script>
     var tempStr = `
       <div>
         <ol>
           {{#students}}
-            <li>
-              学生{{item.name}}的爱好是
+            <li class='laji'>
+              学生{{name}}的爱好是
               <ol>  
-                {{#item.hobbies}}
+                {{#hobbies}}
                   <li>{{.}}</li>
-                {{/item.hobbies}}
+                {{/hobbies}}
               </ol>  
             </li>
           {{/students}}
         </ol>
       </div>
     `
-    var data = {}
-    GL_TemplateEngine.render(tempStr,data)
+    // tempStr = '我爱{{somebody.name}},{{somebody.name}}也爱我'
+    var data = {
+      students: [
+        { name: '小明', hobbies: [ '游泳', '健身'] },
+        { name: '小红', hobbies: [ '足球', '篮球', '羽毛球'] },
+        { name: '小强', hobbies: [ '吃饭', '睡觉' ] },
+      ]
+    }
+    // data = {
+    //   somebody: {
+    //     name: "gulai"
+    //   }
+    // }
+    var domstr = GL_TemplateEngine.render(tempStr,data)
+    console.log(domstr);
+    document.getElementById('container').innerHTML = domstr
   </script>
 </body>
 </html>
